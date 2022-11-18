@@ -12,6 +12,17 @@ import scripts.game_structure.image_cache as image_cache
 
 class OutsideClanScreen(Screens):
 
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha() or event.unicode.isspace(
+            ):  # only allows alphabet letters/space as an input
+                if len(game.switches['search_text']
+                       ) < 20:  # can't type more than max name length
+                    game.switches['search_text'] += event.unicode
+            elif event.key == pygame.K_BACKSPACE:  # delete last character
+                game.switches['search_text'] = game.switches[
+                    'search_text'][:-1]
+
     def on_use(self):
         clan_name_bg = pygame.transform.scale(
             image_cache.load_image("resources/images/outside_clan_bg.png").convert_alpha(), (242, 35))

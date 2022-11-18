@@ -816,6 +816,17 @@ class RelationshipScreen(Screens):
     mate_icon_small = pygame.transform.scale(image_cache.load_image("resources/images/heart_big.png").convert_alpha(), (11, 10))
     family_icon_small = pygame.transform.scale(image_cache.load_image("resources/images/dot_big.png").convert_alpha(), (9, 9))
 
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha() or event.unicode.isspace(
+            ):  # only allows alphabet letters/space as an input
+                if len(game.switches['search_text']
+                       ) < 20:  # can't type more than max name length
+                    game.switches['search_text'] += event.unicode
+            elif event.key == pygame.K_BACKSPACE:  # delete last character
+                game.switches['search_text'] = game.switches[
+                    'search_text'][:-1]
+
     def on_use(self):
         # use this variable to point to the cat object in question
         # this cat is the current cat in focus - aka the cat we're viewing the relationships of

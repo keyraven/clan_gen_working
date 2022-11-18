@@ -4,10 +4,11 @@ from .base_screens import Screens, draw_menu_buttons, draw_clan_name
 
 from scripts.clan import map_available
 from scripts.cat.cats import Cat
+from scripts.game_structure.image_button import UIImageButton
 # from scripts.world import save_map
 from scripts.game_structure.text import *
 from scripts.game_structure.buttons import buttons
-
+import pygame_gui
 
 class StartScreen(Screens):
 
@@ -15,64 +16,62 @@ class StartScreen(Screens):
         super().__init__(name)
         self.bg = pygame.image.load("resources/images/menu.png").convert()
 
+    def handle_event(self, event):
+        '''This is where events that occur on this page are handled.
+        For the pygame_gui rewrite, button presses are also handled here. '''
+        if event.type == pygame_gui.UI_BUTTON_START_PRESS:
+            if event.ui_element == self.continue_button:
+                self.change_screen('clan screen')
+            elif event.ui_element == self.switch_clan_button:
+                self.change_screen('switch clan screen')
+            elif event.ui_element == self.new_clan_button:
+                self.change_screen('make clan screen')
+            elif event.ui_element == self.settings_button:
+                self.change_screen('settings screen')
+        
+
     def on_use(self):
-        # background
+        # have to blit this manually or else hover input doesn't get read properly
         screen.blit(self.bg, (0, 0))
 
-        # buttons
-        if game.clan is not None and game.switches['error_message'] == '':
-            buttons.draw_image_button((70, 310),
-                                      button_name='continue',
-                                      text='Continue >',
-                                      cur_screen='clan screen',
-                                      size=(192, 35))
-            buttons.draw_image_button((70, 355),
-                                      button_name='switch_clan',
-                                      text='Switch Clan >',
-                                      cur_screen='switch clan screen',
-                                      size=(192, 35))
-        elif game.clan is not None and game.switches['error_message']:
-            buttons.draw_image_button((70, 310),
-                                      button_name='continue',
-                                      text='Continue >',
-                                      available=False,
-                                      size=(192, 35))
-            buttons.draw_image_button((70, 355),
-                                      button_name='switch_clan',
-                                      text='Switch Clan >',
-                                      cur_screen='switch clan screen',
-                                      size=(192, 35))
-        else:
-            buttons.draw_image_button((70, 310),
-                                      button_name='continue',
-                                      text='Continue >',
-                                      available=False,
-                                      size=(192, 35))
-            buttons.draw_image_button((70, 355),
-                                      button_name='switch_clan',
-                                      text='Switch Clan >',
-                                      available=False,
-                                      size=(192, 35))
-        buttons.draw_image_button((70, 400),
-                                  button_name='new_clan',
-                                  text='Make New >',
-                                  cur_screen='make clan screen',
-                                  size=(192, 35))
-        buttons.draw_image_button((70, 445),
-                                  button_name='settings',
-                                  text='Settings & Info >',
-                                  cur_screen='settings screen',
-                                  size=(192, 35))
-
-        if game.switches['error_message']:
-            buttons.draw_button((50, 50),
-                                text='There was an error loading the game:',
-                                available=False)
-            buttons.draw_button((50, 80),
-                                text=game.switches['error_message'],
-                                available=False)
+    def exit_screen(self):
+        #Button murder time. 
+        self.continue_button.kill()
+        self.switch_clan_button.kill()
+        self.new_clan_button.kill()
+        self.settings_button.kill()
+        self.error_label.kill()
 
     def screen_switches(self):
+        #Create buttons
+        self.continue_button = UIImageButton(pygame.Rect((70, 310), (192, 35)), "",
+                                                            object_id = pygame_gui.core.ObjectID(class_id="@start_screen",object_id="#continue_button"))
+        self.switch_clan_button = UIImageButton(pygame.Rect((70, 355), (192, 35)), "", 
+                                                            object_id = pygame_gui.core.ObjectID(class_id="@start_screen",object_id="#switch_clan_button"))
+        self.new_clan_button = UIImageButton(pygame.Rect((70, 400), (192, 35)), "",
+                                                            object_id = pygame_gui.core.ObjectID(class_id="@start_screen",object_id="#new_clan_button"))
+        self.settings_button = UIImageButton(pygame.Rect((70, 445), (192, 35)), "",
+                                                                object_id = pygame_gui.core.ObjectID(class_id="@start_screen",object_id="#settings_button"))
+        
+        self.error_label = pygame_gui.elements.UILabel(pygame.Rect(50, 50, -1, -1), "")
+        self.error_label.hide()
+
+        if game.clan is not None and game.switches['error_message'] == '':
+            self.continue_button.enable()
+            self.switch_clan_button.enable()
+        elif game.clan is not None and game.switches['error_message']:
+            self.continue_button.disable()
+            self.switch_clan_button.enable()
+        else:
+            self.continue_button.disable()
+            self.switch_clan_button.disable()
+
+        if game.switches['error_message']:
+            #TODO: Switch to another kind of ui element here
+            error_text = f"There was an error loading the game: \n {game.switches['error_message']}"
+            self.error_label.set_text(error_text)
+            self.error_label.show()
+
         if game.clan is not None:
             key_copy = tuple(Cat.all_cats.keys())
             for x in key_copy:

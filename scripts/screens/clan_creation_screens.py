@@ -56,6 +56,19 @@ class MakeClanScreen(Screens):
         screen.blit(MakeClanScreen.clan_frame_img, (292, 100))
         verdana_light.text(game.switches['clan_name'] + 'Clan', ('center', 115))
 
+
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha(
+            ):  # only allows alphabet letters as an input
+                if len(
+                        game.switches['naming_text']
+                ) < game.max_name_length:  # can't type more than max name length
+                    game.switches['naming_text'] += event.unicode
+            elif event.key == pygame.K_BACKSPACE:  # delete last character of clan name
+                game.switches['naming_text'] = game.switches[
+                    'naming_text'][:-1]
+    
     def game_mode(self):
         # ---------------------------------------------------------------------------- #
         #                                    layout                                    #
@@ -1245,4 +1258,5 @@ class ClanCreatedScreen(Screens):
                 return self.x, self.y
         else:
             return self.x, self.y
+    
 

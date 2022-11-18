@@ -25,6 +25,27 @@ class SingleEventScreen(Screens):
 
 class RelationshipEventScreen(Screens):
 
+    def handle_event(self, event):
+        if len(game.relation_events_list) > game.max_relation_events_displayed:
+            max_scroll_direction = len(
+                game.relation_events_list) - game.max_relation_events_displayed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP and game.relation_scroll_ct < 0:
+                    game.relation_events_list.insert(0, game.relation_events_list.pop())
+                    game.relation_scroll_ct += 1
+                if event.key == pygame.K_DOWN and abs(
+                        game.relation_scroll_ct) < max_scroll_direction:
+                    game.relation_events_list.append(game.relation_events_list.pop(0))
+                    game.relation_scroll_ct -= 1
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 4 and game.relation_scroll_ct < 0:
+                    game.relation_events_list.insert(0, game.relation_events_list.pop())
+                    game.relation_scroll_ct += 1
+                if event.button == 5 and abs(
+                        game.relation_scroll_ct) < max_scroll_direction:
+                    game.relation_events_list.append(game.relation_events_list.pop(0))
+                    game.relation_scroll_ct -= 1
+
     def on_use(self):
         a = 0
         draw_clan_name()
@@ -105,6 +126,28 @@ class RelationshipEventScreen(Screens):
         cat_profiles()
 
 class EventsScreen(Screens):
+
+    def handle_event(self, event):
+        #max_scroll_direction = len(game.cur_events_list) - game.max_events_displayed
+        if len(game.cur_events_list) > game.max_events_displayed:
+            max_scroll_direction = len(game.cur_events_list) - game.max_events_displayed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP and game.event_scroll_ct < 0:
+                    game.cur_events_list.insert(0, game.cur_events_list.pop())
+                    game.event_scroll_ct += 1
+                if event.key == pygame.K_DOWN and abs(
+                        game.event_scroll_ct) < max_scroll_direction:
+                    game.cur_events_list.append(game.cur_events_list.pop(0))
+                    game.event_scroll_ct -= 1
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 4 and game.event_scroll_ct < 0:
+                    game.cur_events_list.insert(0, game.cur_events_list.pop())
+                    game.event_scroll_ct += 1
+                if event.button == 5 and abs(
+                        game.event_scroll_ct) < max_scroll_direction:
+                    game.cur_events_list.append(game.cur_events_list.pop(0))
+                    game.event_scroll_ct -= 1
+        return super().handle_event(event)
 
     def on_use(self):
         draw_clan_name()
@@ -200,6 +243,16 @@ class EventsScreen(Screens):
                                 hotkey=[22])
 
 class PatrolEventScreen(Screens):
+
+    def handle_event(self, event):
+        #random_options = []
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_9:
+                for u in range(12):
+                    i_max = len(game.patrol_cats)
+                    if u < i_max:
+                        game.switches['current_patrol'].append(
+                            game.patrol_cats[u])
 
     event_bg = pygame.image.load("resources/images/patrol_event_frame.png").convert_alpha()
     info_bg = pygame.image.load("resources/images/patrol_info.png").convert_alpha()

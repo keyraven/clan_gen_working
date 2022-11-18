@@ -13,6 +13,13 @@ class Screens():
     game_y = screen_y
     last_screen = ''
 
+
+    def change_screen(self,new_screen):
+        '''Use this function when switching screens.'''
+        self.exit_screen()
+        game.switches['cur_screen'] = new_screen
+        game.switch_screens = True
+
     def __init__(self, name=None):
         self.name = name
         if name is not None:
@@ -29,6 +36,14 @@ class Screens():
         """Runs when this screen is switched to."""
         pass
 
+    def handle_event(self, event):
+        '''This is where events that occur on this page are handled.
+        For the pygame_gui rewrite, button presses are also handled here. '''
+        pass
+
+    def exit_screen(self):
+        '''Runs when screen exits'''
+        pass
  
 # CAT PROFILES
 def cat_profiles():

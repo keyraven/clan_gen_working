@@ -181,6 +181,17 @@ class ClanScreen(Screens):
 
 class StarClanScreen(Screens):
 
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha() or event.unicode.isspace(
+            ):  # only allows alphabet letters/space as an input
+                if len(game.switches['search_text']
+                       ) < 20:  # can't type more than max name length
+                    game.switches['search_text'] += event.unicode
+            elif event.key == pygame.K_BACKSPACE:  # delete last character
+                game.switches['search_text'] = game.switches[
+                    'search_text'][:-1]
+
     def __init__(self, name=None):
         super().__init__(name)
         self.starclan_bg = pygame.transform.scale(
@@ -298,6 +309,17 @@ class ListScreen(Screens):
     # page can be found in game.switches['list_page']
     # the amount of cats a page can hold is 20, so the amount of pages is cats/20
 
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha() or event.unicode.isspace(
+            ):  # only allows alphabet letters/space as an input
+                if len(game.switches['search_text']
+                       ) < 20:  # can't type more than max name length
+                    game.switches['search_text'] += event.unicode
+            elif event.key == pygame.K_BACKSPACE:  # delete last character
+                game.switches['search_text'] = game.switches[
+                    'search_text'][:-1]
+
     search_bar = pygame.transform.scale(
         pygame.image.load("resources/images/search_bar.png").convert_alpha(), (228, 34))
 
@@ -406,6 +428,27 @@ class ListScreen(Screens):
         cat_profiles()
 
 class AllegiancesScreen(Screens):
+
+    def handle_event(self, event):
+        if len(game.allegiance_list) > game.max_allegiance_displayed:
+            max_scroll_direction = len(
+                game.allegiance_list) - game.max_allegiance_displayed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP and game.allegiance_scroll_ct < 0:
+                    game.allegiance_list.insert(0, game.allegiance_list.pop())
+                    game.allegiance_scroll_ct += 1
+                if event.key == pygame.K_DOWN and abs(
+                        game.allegiance_scroll_ct) < max_scroll_direction:
+                    game.allegiance_list.append(game.allegiance_list.pop(0))
+                    game.allegiance_scroll_ct -= 1
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 4 and game.allegiance_scroll_ct < 0:
+                    game.allegiance_list.insert(0, game.allegiance_list.pop())
+                    game.allegiance_scroll_ct += 1
+                if event.button == 5 and abs(
+                        game.allegiance_scroll_ct) < max_scroll_direction:
+                    game.allegiance_list.append(game.allegiance_list.pop(0))
+                    game.allegiance_scroll_ct -= 1
 
     def on_use(self):
         draw_clan_name()
@@ -606,6 +649,18 @@ class AllegiancesScreen(Screens):
 
 # template for dark forest
 class DFScreen(Screens):
+
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha() or event.unicode.isspace(
+            ):  # only allows alphabet letters/space as an input
+                if len(game.switches['search_text']
+                       ) < 20:  # can't type more than max name length
+                    game.switches['search_text'] += event.unicode
+            elif event.key == pygame.K_BACKSPACE:  # delete last character
+                game.switches['search_text'] = game.switches[
+                    'search_text'][:-1]
+
     def __init__(self, name=None):
         super().__init__(name)
         self.df_bg = pygame.transform.scale(

@@ -27,6 +27,59 @@ def draw_text_bar():
         image_cache.load_image("resources/images/text_input_frame.png").convert_alpha(), (216, 40))
     screen.blit(text_input_frame, (294, 194))
 
+#Draws boxes for name
+def draw_namechange_text_bars(the_cat):
+    if game.settings['dark mode']:
+        pygame.draw.rect(screen, 'white', pygame.Rect((156, 200),
+                                                      (200, 24)))
+        verdana_black.text(game.switches['naming_text'], (171, 204))
+
+        if the_cat.name.status == "apprentice":
+            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
+                                                      (200, 24)))
+            verdana_black.text('paw', (459, 204))
+        elif the_cat.name.status == "kitten":
+            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
+                                                      (200, 24)))
+            verdana_black.text('kitten', (459, 204))
+        elif the_cat.name.status == "leader":
+            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
+                                                      (200, 24)))
+            verdana_black.text('star', (459, 204))
+        else:
+            pygame.draw.rect(screen, 'white', pygame.Rect((444, 200),
+                                                      (200, 24)))
+            verdana_black.text(game.switches['suffix_text'], (459, 204))
+    else:
+        pygame.draw.rect(screen, 'white', pygame.Rect((166, 200),
+                                                      (200, 24)))
+        verdana.text(game.switches['naming_text'], (181, 204))
+
+        if the_cat.name.status == "apprentice":
+            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
+                                                      (200, 24)))
+            verdana.text('paw', (459, 204))
+        elif the_cat.name.status == "kitten":
+            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
+                                                      (200, 24)))
+            verdana.text('kit', (459, 204))
+        elif the_cat.name.status == "leader":
+            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
+                                                      (200, 24)))
+            verdana.text('star', (459, 204))
+        else:
+            pygame.draw.rect(screen, 'white', pygame.Rect((444, 200),
+                                                      (200, 24)))
+            verdana.text(game.switches['suffix_text'], (459, 204))
+
+
+    text_input_frame = pygame.transform.scale(
+        image_cache.load_image("resources/images/text_input_frame.png").convert_alpha(), (216, 40))
+    screen.blit(text_input_frame, (160, 194))
+    screen.blit(text_input_frame, (430, 194))
+
+
+
 
 # ---------------------------------------------------------------------------- #
 #                               draw back button                               #
@@ -60,6 +113,8 @@ def draw_back(x_value, y_value):
                                   size=(105, 30),
                                   cur_screen=game.switches['last_screen'],
                                   profile_tab_group=None,
+                                  naming_text = '',
+                                  suffix_text = '',
                                   hotkey=[0])
 
 # ---------------------------------------------------------------------------- #
@@ -240,6 +295,41 @@ class ProfileScreen(Screens):
 
     # UI Images
     backstory_tab = image_cache.load_image("resources/images/backstory_bg.png").convert_alpha()
+
+    def handle_event(self, event):
+        previous_cat = 0
+        next_cat = 0
+        the_cat = Cat.all_cats.get(game.switches['cat'],
+                                            game.clan.instructor)
+        for check_cat in Cat.all_cats:
+            if Cat.all_cats[check_cat].ID == the_cat.ID:
+                next_cat = 1
+            if next_cat == 0 and Cat.all_cats[
+                    check_cat].ID != the_cat.ID and Cat.all_cats[
+                        check_cat].dead == the_cat.dead and Cat.all_cats[
+                            check_cat].ID != game.clan.instructor.ID and not Cat.all_cats[
+                                check_cat].exiled:
+                previous_cat = Cat.all_cats[check_cat].ID
+            elif next_cat == 1 and Cat.all_cats[
+                    check_cat].ID != the_cat.ID and Cat.all_cats[
+                        check_cat].dead == the_cat.dead and Cat.all_cats[
+                            check_cat].ID != game.clan.instructor.ID and not Cat.all_cats[
+                                check_cat].exiled:
+                next_cat = Cat.all_cats[check_cat].ID
+            elif int(next_cat) > 1:
+                break
+        if next_cat == 1:
+            next_cat = 0
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT and previous_cat != 0:
+                game.switches['cat'] = previous_cat
+            if event.key == pygame.K_RIGHT and next_cat != 0:
+                game.switches['cat'] = next_cat
+            if event.key == pygame.K_0:
+                game.switches['cur_screen'] = 'list screen'
+            if event.key == pygame.K_1:
+                game.switches['cur_screen'] = 'options screen'
+                game.switches['last_screen'] = 'profile screen'
 
     def on_use(self):
         # use this variable to point to the cat object in question
@@ -1312,54 +1402,106 @@ class ProfileScreen(Screens):
 # ---------------------------------------------------------------------------- #
 class ChangeNameScreen(Screens):
 
+    def screen_switches(self):
+        game.switches['naming_text'] = ''
+        game.switches['suffix_text'] = ''
+    
+
     def on_use(self):
         the_cat = Cat.all_cats.get(game.switches['cat'])
 
         # draw bar for user input
-        draw_text_bar()
-
+        draw_namechange_text_bars(the_cat)
+    
         # text explanation
         verdana.text('-Change Name-', ('center', 130))
-        verdana.text('Add a space between the new prefix and suffix',
+        verdana.text('Leave field blank for no change',
                      ('center', 150))
-        verdana.text('i.e. Fire heart', ('center', 170))
+        
+        buttons.draw_button((300, 230),
+                            text = "Enter Prefix",
+                            active_text_field = 0 ,
+                            )
+
+        buttons.draw_button((400, 230),
+                            text = "Enter Suffix",
+                            active_text_field = 1 ,
+                            )
 
         # button to switch to Name Changed screen
-        buttons.draw_image_button((365, 272),
+        buttons.draw_image_button((365, 282),
                                   button_name='done',
                                   text='done',
                                   size=(77, 30),
-                                  change_name=['naming_text'],
+                                  change_name=game.switches['naming_text'],
+                                  change_suffix = game.switches['suffix_text'],
+                                  active_text_field = 0,
                                   )
 
         # changes the name
-        if game.switches['change_name'] != '':
-            name = game.switches['naming_text'].split(' ')
-            if name != ['']:
-                the_cat.name.prefix = name[0]
-                if len(name) > 1:
-                    # If cat is an apprentice/kit and new suffix is paw/kit, leave hidden suffix unchanged
-                    if not (the_cat.name.status == "apprentice" and name[1] == "paw") and \
-                            not (the_cat.name.status == "kitten" and name[1] == "kit"):
-                        the_cat.name.suffix = name[1]
+        if game.switches['change_name'] != '' or game.switches['change_suffix'] != '':
+            if game.switches['change_name'] != '':
+                the_cat.name.prefix = game.switches['change_name']
+            if game.switches['change_suffix'] != '':
+                # If cat is an apprentice/kit and new suffix is paw/kit, leave hidden suffix unchanged
+                if not (the_cat.name.status == "apprentice") and \
+                        not (the_cat.name.status == "kitten") and \
+                            not(the_cat.name.status == 'leader'):
+                    the_cat.name.suffix = game.switches['change_suffix']
+            game.switches['active_text_field'] = 0
+            game.switches['change_name'] = ''
+            game.switches['change_suffix'] = ''
+            game.switches['naming_text'] = ''
+            game.switches['suffix_text'] = ''
+            game.switches['cur_screen'] = 'name changed screen'
 
-                game.switches['naming_text'] = ''
-                game.switches['cur_screen'] = 'name changed screen'
 
         draw_back(25, 25)
+
+    def handle_event(self,event):
+        if event.type == pygame.KEYDOWN:
+            if (event.unicode.isalpha() or event.unicode.isspace(
+            )) and not event.key == pygame.K_TAB:  # only allows alphabet letters/space as an input
+                if game.switches['active_text_field'] == 0:
+                    if len(game.switches['naming_text']) < 20:  # can't type more than max name length
+                        game.switches['naming_text'] += event.unicode
+                elif game.switches['active_text_field'] == 1:
+                    if len(game.switches['suffix_text']) < 20:  # can't type more than max name length
+                        game.switches['suffix_text'] += event.unicode
+            elif event.key == pygame.K_BACKSPACE:  # delete last character
+                if game.switches['active_text_field'] == 0:
+                    game.switches['naming_text'] = game.switches['naming_text'][:-1]
+                elif game.switches['active_text_field'] == 1:
+                    game.switches['suffix_text'] = game.switches['suffix_text'][:-1]
+            elif event.key == pygame.K_TAB:
+                if game.switches['active_text_field'] == 0:
+                    game.switches['active_text_field'] = 1
+                elif game.switches['active_text_field'] == 1:
+                    game.switches['active_text_field'] = 0
 
 
 class NameChangedScreen(Screens):
     def on_use(self):
+        the_cat = Cat.all_cats.get(game.switches['cat'])
 
         # draw bar for user input, purely for UI consistency
-        draw_text_bar()
+        draw_namechange_text_bars(the_cat)
 
         # draw explanation text, purely for UI consistency
         verdana.text('-Change Name-', ('center', 130))
         verdana.text('Add a space between the new prefix and suffix',
                      ('center', 150))
         verdana.text('i.e. Fire heart', ('center', 170))
+
+        buttons.draw_button((300, 230),
+                            text = "Enter Prefix",
+                            active_text_field = 0 ,
+                            )
+
+        buttons.draw_button((400, 230),
+                            text = "Enter Suffix",
+                            active_text_field = 1 ,
+                            )
 
         # make Done button unavailable
         buttons.draw_image_button((365, 272),
@@ -1371,7 +1513,6 @@ class NameChangedScreen(Screens):
                                   )
 
         # name change confirmation text
-        game.switches['change_name'] = ''
         verdana.text('Name changed!', ('center', 240))
 
         # return to cat profile
@@ -1387,6 +1528,10 @@ class NameChangedScreen(Screens):
 #                           change gender screen                               #
 # ---------------------------------------------------------------------------- #
 class ChangeGenderScreen(Screens):
+    gender_text = ''
+
+    def screen_switches(self):
+         gender_text = ''
 
     def on_use(self):
         the_cat = Cat.all_cats.get(game.switches['cat'])
@@ -1413,6 +1558,18 @@ class ChangeGenderScreen(Screens):
             game.switches['cur_screen'] = 'gender changed screen'
 
         draw_back(25, 25)
+
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha() or event.unicode.isspace(
+            ):  # only allows alphabet letters/space as an input
+                if len(game.switches['naming_text']
+                        ) < 20:  # can't type more than max name length
+                    game.switches['naming_text'] += event.unicode
+            elif event.key == pygame.K_BACKSPACE:  # delete last character
+                game.switches['naming_text'] = game.switches[
+                    'naming_text'][:-1]
+        return 
 
 
 class GenderChangedScreen(Screens):
