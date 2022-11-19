@@ -8,6 +8,8 @@ from scripts.game_structure.buttons import buttons
 from scripts.cat.cats import Cat
 from scripts.cat.pelts import collars, wild_accessories
 import scripts.game_structure.image_cache as image_cache
+import pygame_gui
+from scripts.game_structure.image_button import UIImageButton
 
 
 # ---------------------------------------------------------------------------- #
@@ -1401,86 +1403,64 @@ class ProfileScreen(Screens):
 #                             change name screen                               #
 # ---------------------------------------------------------------------------- #
 class ChangeNameScreen(Screens):
+    the_cat = ''
+    name_changed = False
 
     def screen_switches(self):
-        game.switches['naming_text'] = ''
-        game.switches['suffix_text'] = ''
+        self.the_cat = Cat.all_cats.get(game.switches['cat'])
+
+        self.done_button = UIImageButton(pygame.Rect((365, 282),(77, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#done_button"))
+        self.back_button = UIImageButton(pygame.Rect((25, 25),(105, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#back_button"))
+
+        self.prefix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((220,200),(180,30)), placeholder_text=self.the_cat.name.prefix)
+        if self.the_cat.name.status in ["apprentice", "leader", "medicine cat apprentice", "leader"]:
+            self.suffix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((400, 200),(180,30)), placeholder_text=self.the_cat.name.special_suffixes[self.the_cat.name.status])
+            self.suffix_entry_box.disable() #You can't change a special suffix
+        else:
+            self.suffix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((400,200),(180,30)), placeholder_text=self.the_cat.name.suffix)
     
+    def exit_screen(self):
+        self.prefix_entry_box.kill()
+        self.suffix_entry_box.kill()
+        self.done_button.kill()
+        self.back_button.kill()
+        self.name_changed = False
 
     def on_use(self):
-        the_cat = Cat.all_cats.get(game.switches['cat'])
-
-        # draw bar for user input
-        draw_namechange_text_bars(the_cat)
-    
         # text explanation
         verdana.text('-Change Name-', ('center', 130))
-        verdana.text('Leave field blank for no change',
-                     ('center', 150))
+
+        if self.name_changed:
+            verdana.text('Name Changed!', ('center', 350))
+
         
-        buttons.draw_button((300, 230),
-                            text = "Enter Prefix",
-                            active_text_field = 0 ,
-                            )
-
-        buttons.draw_button((400, 230),
-                            text = "Enter Suffix",
-                            active_text_field = 1 ,
-                            )
-
-        # button to switch to Name Changed screen
-        buttons.draw_image_button((365, 282),
-                                  button_name='done',
-                                  text='done',
-                                  size=(77, 30),
-                                  change_name=game.switches['naming_text'],
-                                  change_suffix = game.switches['suffix_text'],
-                                  active_text_field = 0,
-                                  )
-
-        # changes the name
-        if game.switches['change_name'] != '' or game.switches['change_suffix'] != '':
-            if game.switches['change_name'] != '':
-                the_cat.name.prefix = game.switches['change_name']
-            if game.switches['change_suffix'] != '':
-                # If cat is an apprentice/kit and new suffix is paw/kit, leave hidden suffix unchanged
-                if not (the_cat.name.status == "apprentice") and \
-                        not (the_cat.name.status == "kitten") and \
-                            not(the_cat.name.status == 'leader'):
-                    the_cat.name.suffix = game.switches['change_suffix']
-            game.switches['active_text_field'] = 0
-            game.switches['change_name'] = ''
-            game.switches['change_suffix'] = ''
-            game.switches['naming_text'] = ''
-            game.switches['suffix_text'] = ''
-            game.switches['cur_screen'] = 'name changed screen'
-
-
-        draw_back(25, 25)
-
     def handle_event(self,event):
-        if event.type == pygame.KEYDOWN:
-            if (event.unicode.isalpha() or event.unicode.isspace(
-            )) and not event.key == pygame.K_TAB:  # only allows alphabet letters/space as an input
-                if game.switches['active_text_field'] == 0:
-                    if len(game.switches['naming_text']) < 20:  # can't type more than max name length
-                        game.switches['naming_text'] += event.unicode
-                elif game.switches['active_text_field'] == 1:
-                    if len(game.switches['suffix_text']) < 20:  # can't type more than max name length
-                        game.switches['suffix_text'] += event.unicode
-            elif event.key == pygame.K_BACKSPACE:  # delete last character
-                if game.switches['active_text_field'] == 0:
-                    game.switches['naming_text'] = game.switches['naming_text'][:-1]
-                elif game.switches['active_text_field'] == 1:
-                    game.switches['suffix_text'] = game.switches['suffix_text'][:-1]
-            elif event.key == pygame.K_TAB:
-                if game.switches['active_text_field'] == 0:
-                    game.switches['active_text_field'] = 1
-                elif game.switches['active_text_field'] == 1:
-                    game.switches['active_text_field'] = 0
+        if event.type == pygame_gui.UI_BUTTON_START_PRESS:
+            if event.ui_element == self.done_button:
+                if self.prefix_entry_box.get_text() != '':
+                    self.the_cat.name.prefix = self.prefix_entry_box.get_text()
+                    self.name_changed = True
+                if self.suffix_entry_box.get_text() != '':
+                    self.the_cat.name.suffix = self.suffix_entry_box.get_text()
+                    self.name_changed = True
+            elif event.ui_element == self.back_button:
+                self.change_screen('profile screen')
 
+#NO LONGER USED, GET RID OF
+'''class NameChangedScreen(Screens):
+    def screen_switches(self):
+        the_cat = Cat.all_cats.get(game.switches['cat'])
 
-class NameChangedScreen(Screens):
+        self.done_button = UIImageButton(pygame.Rect((365, 282),(77, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#done_button"))
+        self.back_button = UIImageButton(pygame.Rect((25, 25),(105, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#back_button"))
+
+        self.prefix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((166,200),(200,30)), placeholder_text=the_cat.name.prefix)
+        if the_cat.name.status in ["apprentice", "leader", "medicine cat apprentice", "leader"]:
+            self.suffix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((424, 200),(200,30)), placeholder_text=the_cat.name.special_suffixes[the_cat.name.status])
+            self.suffix_entry_box.disable() #You can't change a special suffix
+        else:
+            self.suffix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((424,200),(200,30)), placeholder_text=the_cat.name.suffix)
+
     def on_use(self):
         the_cat = Cat.all_cats.get(game.switches['cat'])
 
@@ -1522,7 +1502,7 @@ class NameChangedScreen(Screens):
                                   size=(105, 30),
                                   cur_screen='profile screen',
                                   profile_tab_group=None,
-                                  hotkey=[0])
+                                  hotkey=[0])'''
 
 # ---------------------------------------------------------------------------- #
 #                           change gender screen                               #
@@ -1531,7 +1511,7 @@ class ChangeGenderScreen(Screens):
     gender_text = ''
 
     def screen_switches(self):
-         gender_text = ''
+         self.gender_text = ''
 
     def on_use(self):
         the_cat = Cat.all_cats.get(game.switches['cat'])

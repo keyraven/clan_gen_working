@@ -45,13 +45,13 @@ class StartScreen(Screens):
     def screen_switches(self):
         #Create buttons
         self.continue_button = UIImageButton(pygame.Rect((70, 310), (192, 35)), "",
-                                                            object_id = pygame_gui.core.ObjectID(class_id="@start_screen",object_id="#continue_button"))
+                                                            object_id = pygame_gui.core.ObjectID(object_id="#continue_button"))
         self.switch_clan_button = UIImageButton(pygame.Rect((70, 355), (192, 35)), "", 
-                                                            object_id = pygame_gui.core.ObjectID(class_id="@start_screen",object_id="#switch_clan_button"))
+                                                            object_id = pygame_gui.core.ObjectID(object_id="#switch_clan_button"))
         self.new_clan_button = UIImageButton(pygame.Rect((70, 400), (192, 35)), "",
-                                                            object_id = pygame_gui.core.ObjectID(class_id="@start_screen",object_id="#new_clan_button"))
+                                                            object_id = pygame_gui.core.ObjectID(object_id="#new_clan_button"))
         self.settings_button = UIImageButton(pygame.Rect((70, 445), (192, 35)), "",
-                                                                object_id = pygame_gui.core.ObjectID(class_id="@start_screen",object_id="#settings_button"))
+                                                                object_id = pygame_gui.core.ObjectID(object_id="#settings_button"))
         
         self.error_label = pygame_gui.elements.UILabel(pygame.Rect(50, 50, -1, -1), "")
         self.error_label.hide()

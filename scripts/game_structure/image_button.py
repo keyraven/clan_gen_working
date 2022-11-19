@@ -2,24 +2,6 @@ import pygame
 import pygame_gui
 
 class UIImageButton(pygame_gui.elements.UIButton):
-    def __init__(self, relative_rect, text = "", manager = None, container= None, 
-    tool_tip_text = None, starting_height: int = 1, parent_element = None, 
-    object_id = None, anchors = None, allow_double_clicks: bool = False, 
-    visible: int = 1, text_kwargs = None):
-        
-
-        
-        super().__init__(relative_rect, text, 
-        manager=manager, 
-        container=container, 
-        tool_tip_text=tool_tip_text, 
-        starting_height=starting_height, 
-        parent_element=parent_element, 
-        object_id=object_id, 
-        anchors = anchors, 
-        allow_double_clicks = allow_double_clicks, 
-        visible = visible, \
-        text_kwargs=text_kwargs)
 
     def _set_any_images_from_theme(self):
 

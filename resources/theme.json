@@ -129,5 +129,48 @@
                 "path": "resources/images/buttons/settings_hover.png"
             }
         }
+    },
+    "#done_button":
+	{
+		"prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/done.png"
+            },
+			"hovered_image":
+            {
+                "path": "resources/images/buttons/done_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/done_hover.png"
+            },
+			"disabled_image":
+            {
+				"path": "resources/images/buttons/done_unavailable.png"
+			}
+			
+		}
+    },
+    "#back_button":
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/back.png"
+            },
+			"hovered_image":
+            {
+                "path": "resources/images/buttons/back_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/back_hover.png"
+            }
+        }
     }
 }
