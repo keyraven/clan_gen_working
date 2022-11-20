@@ -29,60 +29,6 @@ def draw_text_bar():
         image_cache.load_image("resources/images/text_input_frame.png").convert_alpha(), (216, 40))
     screen.blit(text_input_frame, (294, 194))
 
-#Draws boxes for name
-def draw_namechange_text_bars(the_cat):
-    if game.settings['dark mode']:
-        pygame.draw.rect(screen, 'white', pygame.Rect((156, 200),
-                                                      (200, 24)))
-        verdana_black.text(game.switches['naming_text'], (171, 204))
-
-        if the_cat.name.status == "apprentice":
-            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
-                                                      (200, 24)))
-            verdana_black.text('paw', (459, 204))
-        elif the_cat.name.status == "kitten":
-            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
-                                                      (200, 24)))
-            verdana_black.text('kitten', (459, 204))
-        elif the_cat.name.status == "leader":
-            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
-                                                      (200, 24)))
-            verdana_black.text('star', (459, 204))
-        else:
-            pygame.draw.rect(screen, 'white', pygame.Rect((444, 200),
-                                                      (200, 24)))
-            verdana_black.text(game.switches['suffix_text'], (459, 204))
-    else:
-        pygame.draw.rect(screen, 'white', pygame.Rect((166, 200),
-                                                      (200, 24)))
-        verdana.text(game.switches['naming_text'], (181, 204))
-
-        if the_cat.name.status == "apprentice":
-            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
-                                                      (200, 24)))
-            verdana.text('paw', (459, 204))
-        elif the_cat.name.status == "kitten":
-            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
-                                                      (200, 24)))
-            verdana.text('kit', (459, 204))
-        elif the_cat.name.status == "leader":
-            pygame.draw.rect(screen, 'gray', pygame.Rect((444, 200),
-                                                      (200, 24)))
-            verdana.text('star', (459, 204))
-        else:
-            pygame.draw.rect(screen, 'white', pygame.Rect((444, 200),
-                                                      (200, 24)))
-            verdana.text(game.switches['suffix_text'], (459, 204))
-
-
-    text_input_frame = pygame.transform.scale(
-        image_cache.load_image("resources/images/text_input_frame.png").convert_alpha(), (216, 40))
-    screen.blit(text_input_frame, (160, 194))
-    screen.blit(text_input_frame, (430, 194))
-
-
-
-
 # ---------------------------------------------------------------------------- #
 #                               draw back button                               #
 # ---------------------------------------------------------------------------- #
@@ -1412,6 +1358,8 @@ class ChangeNameScreen(Screens):
         self.done_button = UIImageButton(pygame.Rect((365, 282),(77, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#done_button"))
         self.back_button = UIImageButton(pygame.Rect((25, 25),(105, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#back_button"))
 
+        self.test_button = UIImageButton(pygame.Rect((350, 350),(180, 180)),"", object_id= pygame_gui.core.ObjectID(object_id="#image_button"),visible =False)
+
         self.prefix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((220,200),(180,30)), placeholder_text=self.the_cat.name.prefix)
         if self.the_cat.name.status in ["apprentice", "leader", "medicine cat apprentice", "leader"]:
             self.suffix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((400, 200),(180,30)), placeholder_text=self.the_cat.name.special_suffixes[self.the_cat.name.status])
@@ -1446,143 +1394,45 @@ class ChangeNameScreen(Screens):
             elif event.ui_element == self.back_button:
                 self.change_screen('profile screen')
 
-#NO LONGER USED, GET RID OF
-'''class NameChangedScreen(Screens):
-    def screen_switches(self):
-        the_cat = Cat.all_cats.get(game.switches['cat'])
-
-        self.done_button = UIImageButton(pygame.Rect((365, 282),(77, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#done_button"))
-        self.back_button = UIImageButton(pygame.Rect((25, 25),(105, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#back_button"))
-
-        self.prefix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((166,200),(200,30)), placeholder_text=the_cat.name.prefix)
-        if the_cat.name.status in ["apprentice", "leader", "medicine cat apprentice", "leader"]:
-            self.suffix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((424, 200),(200,30)), placeholder_text=the_cat.name.special_suffixes[the_cat.name.status])
-            self.suffix_entry_box.disable() #You can't change a special suffix
-        else:
-            self.suffix_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((424,200),(200,30)), placeholder_text=the_cat.name.suffix)
-
-    def on_use(self):
-        the_cat = Cat.all_cats.get(game.switches['cat'])
-
-        # draw bar for user input, purely for UI consistency
-        draw_namechange_text_bars(the_cat)
-
-        # draw explanation text, purely for UI consistency
-        verdana.text('-Change Name-', ('center', 130))
-        verdana.text('Add a space between the new prefix and suffix',
-                     ('center', 150))
-        verdana.text('i.e. Fire heart', ('center', 170))
-
-        buttons.draw_button((300, 230),
-                            text = "Enter Prefix",
-                            active_text_field = 0 ,
-                            )
-
-        buttons.draw_button((400, 230),
-                            text = "Enter Suffix",
-                            active_text_field = 1 ,
-                            )
-
-        # make Done button unavailable
-        buttons.draw_image_button((365, 272),
-                                  button_name='done',
-                                  text='done',
-                                  size=(77, 30),
-                                  name_cat=['naming_text'],
-                                  available=False
-                                  )
-
-        # name change confirmation text
-        verdana.text('Name changed!', ('center', 240))
-
-        # return to cat profile
-        buttons.draw_image_button((25, 25),
-                                  button_name='back',
-                                  text='Back',
-                                  size=(105, 30),
-                                  cur_screen='profile screen',
-                                  profile_tab_group=None,
-                                  hotkey=[0])'''
-
 # ---------------------------------------------------------------------------- #
 #                           change gender screen                               #
 # ---------------------------------------------------------------------------- #
 class ChangeGenderScreen(Screens):
-    gender_text = ''
+    gender_changed = False
 
     def screen_switches(self):
-         self.gender_text = ''
+        self.the_cat = Cat.all_cats.get(game.switches['cat'])
+        self.gender_changed = False
+    
+        self.gender_entry_box = pygame_gui.elements.UITextEntryLine(pygame.Rect((300, 200),(200, 24)),placeholder_text=self.the_cat.genderalign)   
+        self.done_button = UIImageButton(pygame.Rect((365, 282),(77, 30)),"", 
+                                            object_id= pygame_gui.core.ObjectID(object_id="#done_button"))
+        self.back_button = UIImageButton(pygame.Rect((25, 25),(105, 30)),"", object_id= pygame_gui.core.ObjectID(object_id="#back_button"))
+        
+    def exit_screen(self):
+        self.gender_entry_box.kill()
+        self.done_button.kill()
+        self.back_button.kill()
+        self.gender_changed = False
 
     def on_use(self):
-        the_cat = Cat.all_cats.get(game.switches['cat'])
-
-        # draw bar for user input
-        draw_text_bar()
 
         # draw explanation text
         verdana.text('-Change Gender-', ('center', 130))
         verdana.text('You can set this to anything.', ('center', 150))
 
-        # button to change gender
-        buttons.draw_image_button((365, 272),
-                                  button_name='done',
-                                  text='done',
-                                  size=(77, 30),
-                                  gender_align=game.switches['naming_text'],
-                                  )
-
-        # switch gender
-        if game.switches['gender_align'] == game.switches['naming_text']:
-            the_cat.genderalign = game.switches['gender_align']
-            game.switches['naming_text'] = ''
-            game.switches['cur_screen'] = 'gender changed screen'
-
-        draw_back(25, 25)
+        if self.gender_changed:
+            verdana.text('Gender changed!', ('center', 240))
 
     def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.unicode.isalpha() or event.unicode.isspace(
-            ):  # only allows alphabet letters/space as an input
-                if len(game.switches['naming_text']
-                        ) < 20:  # can't type more than max name length
-                    game.switches['naming_text'] += event.unicode
-            elif event.key == pygame.K_BACKSPACE:  # delete last character
-                game.switches['naming_text'] = game.switches[
-                    'naming_text'][:-1]
+        if event.type == pygame_gui.UI_BUTTON_START_PRESS:
+            if event.ui_element == self.done_button:
+                if self.gender_entry_box.get_text() != "":
+                    self.the_cat.genderalign = self.gender_entry_box.get_text()
+                    self.gender_changed = True
+            elif event.ui_element == self.back_button:
+                self.change_screen('profile screen')
         return 
-
-
-class GenderChangedScreen(Screens):
-
-    def on_use(self):
-
-        # UI consistency
-        draw_text_bar()
-
-        # UI consistency
-        verdana.text('Change Gender', ('center', 130))
-        verdana.text('You can set this to anything.', ('center', 150))
-
-        # make unavailable
-        buttons.draw_image_button((365, 272),
-                                  button_name='done',
-                                  text='done',
-                                  size=(77, 30),
-                                  gender_align=game.switches['naming_text'],
-                                  available=False
-                                  )
-
-        # confirmation text
-        verdana.text('Gender changed!', ('center', 240))
-
-        # return to profile screen
-        buttons.draw_image_button((25, 25),
-                                  button_name='back',
-                                  text='Back',
-                                  size=(105, 30),
-                                  cur_screen='profile screen',
-                                  profile_tab_group=None,
-                                  hotkey=[0])
 
 
 class ExileProfileScreen(Screens):

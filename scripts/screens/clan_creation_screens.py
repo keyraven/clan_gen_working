@@ -35,7 +35,6 @@ def draw_main_menu(self):
 
 
 class MakeClanScreen(Screens):
-
     # UI images
     clan_frame_img = pygame.image.load(
         'resources/images/pick_clan_screen/clan_name_frame.png').convert_alpha()
@@ -51,11 +50,41 @@ class MakeClanScreen(Screens):
         'resources/images/pick_clan_screen/clan_light.png').convert_alpha()
     bg_preview_border = pygame.transform.scale(
         pygame.image.load("resources/images/bg_preview_border.png").convert_alpha(), (466, 416))
+
     def draw_clan_name(self):
         # draw name and frame
         screen.blit(MakeClanScreen.clan_frame_img, (292, 100))
         verdana_light.text(game.switches['clan_name'] + 'Clan', ('center', 115))
 
+    def screen_switches(self):
+        return super().screen_switches()
+
+    def exit_screen(self):
+        return super().exit_screen()
+
+    def on_use(self):
+
+        if game.switches['set_game_mode'] is False:
+            self.game_mode()
+        elif len(game.switches['clan_name']) == 0 and game.switches['set_game_mode'] is True:
+            self.first_phase()
+        elif len(game.switches['clan_name']
+                 ) > 0 and game.switches['leader'] is None:
+            self.second_phase()
+        elif game.switches[
+                'leader'] is not None and game.switches['deputy'] is None:
+            Clan.leader_lives = 9
+            self.third_phase()
+        elif game.switches['leader'] is not None and game.switches[
+                'medicine_cat'] is None:
+            self.fourth_phase()
+        elif game.switches['medicine_cat'] is not None and game.switches[
+                'choosing_camp'] is False:
+            self.fifth_phase()
+        elif len(game.switches['members']) != 0:
+            self.sixth_phase()
+        else:
+            self.first_phase()
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -1044,31 +1073,6 @@ class MakeClanScreen(Screens):
             image_cache.load_image(arg0).convert(), (450, 400))
         self.camp2 = pygame.transform.scale(
             image_cache.load_image(arg1).convert(), (450, 400))
-
-
-    def on_use(self):
-
-        if game.switches['set_game_mode'] is False:
-            self.game_mode()
-        elif len(game.switches['clan_name']) == 0 and game.switches['set_game_mode'] is True:
-            self.first_phase()
-        elif len(game.switches['clan_name']
-                 ) > 0 and game.switches['leader'] is None:
-            self.second_phase()
-        elif game.switches[
-                'leader'] is not None and game.switches['deputy'] is None:
-            Clan.leader_lives = 9
-            self.third_phase()
-        elif game.switches['leader'] is not None and game.switches[
-                'medicine_cat'] is None:
-            self.fourth_phase()
-        elif game.switches['medicine_cat'] is not None and game.switches[
-                'choosing_camp'] is False:
-            self.fifth_phase()
-        elif len(game.switches['members']) != 0:
-            self.sixth_phase()
-        else:
-            self.first_phase()
 
     def screen_switches(self):
         game.switches['game_mode'] = None

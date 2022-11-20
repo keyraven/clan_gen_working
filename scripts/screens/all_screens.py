@@ -1,5 +1,5 @@
 from .base_screens import Screens
-from .cat_screens import ProfileScreen, ChangeGenderScreen, ChangeNameScreen, ExileProfileScreen, GenderChangedScreen
+from .cat_screens import ProfileScreen, ChangeGenderScreen, ChangeNameScreen, ExileProfileScreen
 from .clan_creation_screens import ClanCreatedScreen, MakeClanScreen
 from .clan_screens import ClanScreen, StarClanScreen, DFScreen, ListScreen, AllegiancesScreen
 from .event_screens import EventsScreen, SingleEventScreen, PatrolEventScreen, RelationshipEventScreen
@@ -30,6 +30,21 @@ BUTTONS:
 """
 
 
+"""
+Currently in the process of converting all screens and UI elements to pygame_gui.  -keyraven
+Completed:
+NameChangeScreen 
+StartScreen
+GenderChangeScreen
+
+
+
+Removed Screens:
+NameChangedScreen
+GenderChangedScreen
+"""
+
+
 # SCREENS
 screens = Screens()
 
@@ -38,9 +53,7 @@ screens = Screens()
 # ---------------------------------------------------------------------------- #
 
 change_gender_screen = ChangeGenderScreen('change gender screen')
-gender_changed_screen = GenderChangedScreen('gender changed screen')
 change_name_screen = ChangeNameScreen('change name screen')
-#name_changed_screen = NameChangedScreen('name changed screen')
 profile_screen = ProfileScreen('profile screen')
 exile_profile_screen = ExileProfileScreen('outside profile screen')
 
