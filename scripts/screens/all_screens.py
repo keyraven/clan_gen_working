@@ -2,7 +2,7 @@ from .base_screens import Screens
 from .cat_screens import ProfileScreen, ChangeGenderScreen, ChangeNameScreen, ExileProfileScreen
 from .clan_creation_screens import ClanCreatedScreen, MakeClanScreen
 from .clan_screens import ClanScreen, StarClanScreen, DFScreen, ListScreen, AllegiancesScreen
-from .event_screens import EventsScreen, SingleEventScreen, PatrolEventScreen, RelationshipEventScreen
+from .event_screens import EventsScreen, SingleEventScreen, PatrolEventScreen
 from .organizational_screens import\
     StartScreen, SettingsScreen, InfoScreen, SwitchClanScreen, LanguageScreen, RelationshipSettingsScreen, StatsScreen
 from .patrol_screens import PatrolScreen
@@ -36,7 +36,24 @@ Completed:
 NameChangeScreen 
 StartScreen
 GenderChangeScreen
+ClanScreen
+AllegiancesScreen
+ListScreen 
+OutsideClanScreen
+StarclanScreen
+ProfileScreen
 
+
+#TODO:
+-DFScreen
+-MakeClanScreen
+-PatrolEventScreen
+-InfoScreen
+-SettingsScreen
+-ChooseMateScreen
+-ChooseMentorScreen
+-RelationshipScreen
+-ViewChildrenScreen
 
 
 Removed Screens:
@@ -81,7 +98,6 @@ df_screen = DFScreen('dark forest screen')
 
 events_screen = EventsScreen('events screen')
 patrol_event_screen = PatrolEventScreen('patrol event screen')
-relationship_event_screen = RelationshipEventScreen('relationship event screen')
 single_event_screen = SingleEventScreen('single event screen')
 
 # ---------------------------------------------------------------------------- #

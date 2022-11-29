@@ -1,4 +1,5 @@
 from random import choice
+import pygame_gui
 
 from .base_screens import Screens, draw_menu_buttons, cat_profiles, draw_clan_name
 
@@ -7,6 +8,7 @@ from scripts.patrol import patrol
 from scripts.utility import draw
 from scripts.game_structure.buttons import buttons
 from scripts.game_structure.text import *
+from scripts.game_structure.image_button import UIImageButton
 
 class SingleEventScreen(Screens):
 
@@ -23,131 +25,101 @@ class SingleEventScreen(Screens):
     def screen_switches(self):
         pass
 
-class RelationshipEventScreen(Screens):
+class EventsScreen(Screens):
+    event_display_type = "clan events"
+    clan_events = ""
+    relation_events = ""
+    display_text = "<center> Check this page to see which events are currently happening at the Clan.</center>"
+    display_events = ""
 
     def handle_event(self, event):
-        if len(game.relation_events_list) > game.max_relation_events_displayed:
-            max_scroll_direction = len(
-                game.relation_events_list) - game.max_relation_events_displayed
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP and game.relation_scroll_ct < 0:
-                    game.relation_events_list.insert(0, game.relation_events_list.pop())
-                    game.relation_scroll_ct += 1
-                if event.key == pygame.K_DOWN and abs(
-                        game.relation_scroll_ct) < max_scroll_direction:
-                    game.relation_events_list.append(game.relation_events_list.pop(0))
-                    game.relation_scroll_ct -= 1
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4 and game.relation_scroll_ct < 0:
-                    game.relation_events_list.insert(0, game.relation_events_list.pop())
-                    game.relation_scroll_ct += 1
-                if event.button == 5 and abs(
-                        game.relation_scroll_ct) < max_scroll_direction:
-                    game.relation_events_list.append(game.relation_events_list.pop(0))
-                    game.relation_scroll_ct -= 1
+        if event.type == pygame_gui.UI_BUTTON_START_PRESS:
+            if event.ui_element == self.timeskip_button:
+                events_class.one_moon()
+                if game.cur_events_list is not None and game.cur_events_list != []:
+                    for i in range(len(game.cur_events_list)):
+                        if not isinstance(game.cur_events_list[i], str):
+                            game.cur_events_list.remove(game.cur_events_list[i])
+                            break        
+                    self.clan_events = "<font color='#000000'>" + '\n\n'.join(game.cur_events_list) + "</font>"
+                else:
+                    self.clan_events = "<font color='#000000'>Nothing significant happened this moon.</font>"
 
-    def on_use(self):
-        a = 0
-        draw_clan_name()
-        verdana.text(
-            'Check this page to see which events are currently happening at the Clan.',
-            ('center', 110))
 
-        verdana.text(f'Current season: {str(game.clan.current_season)}',
-                     ('center', 140))
+                if game.relation_events_list is not None and game.relation_events_list != []:
+                    for i in range(len(game.relation_events_list)):
+                        if not isinstance(game.relation_events_list[i], str):
+                            game.game.relation_events_list(game.relation_events_list[i])
+                            break        
+                    self.relation_events = "<font color='#000000'>" + '\n'.join(game.relation_events_list) + "</font>"
+                else:
+                    self.relation_events = "<font color='#000000'>Nothing significant happened this moon.</font>"
 
-        if game.clan.age == 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moon',
-                         ('center', 170))
-        if game.clan.age != 1:
-            verdana.text(f'Clan age: {str(game.clan.age)} moons',
-                         ('center', 170))
+                if self.event_display_type == "clan events":
+                    self.display_events = self.clan_events
+                elif self.event_display_type == "relationship events":
+                    self.display_events = self.relation_events
 
-        if game.switches['events_left'] == 0:
-            buttons.draw_image_button((310, 205),
-                                      button_name='timeskip_moon',
-                                      text='TIMESKIP ONE MOON',
-                                      size=(180, 30),
-                                      timeskip=True,
-                                      hotkey=[11])
-            if game.switches['timeskip']:
-                game.cur_events_list = []
-                game.relation_events_list = []
-        else:
-            buttons.draw_image_button((310, 205),
-                                      button_name='timeskip_moon',
-                                      text='TIMESKIP ONE MOON',
-                                      available=False,
-                                      size=(180, 30),
-                                )
-        events_class.one_moon()
+                self.update_events_display()
+        
+            elif event.ui_element == self.toggle_borders_button:
+                if game.clan.closed_borders == True:
+                    game.clan.closed_borders = False
+                    self.toggle_borders_button.set_text("Close Clan Borders")
+                else:
+                    game.clan.closed_borders = True
+                    self.toggle_borders_button.set_text("Open Clan Borders")
 
-        # show the clan events
-        buttons.draw_image_button((224, 245),
-                                  button_name='clan_events',
-                                  text='CLAN EVENTS',
-                                  cur_screen='events screen',
-                                  size=(176, 30),
-                                  hotkey=[12]
-                                  )
-
-        buttons.draw_image_button((400, 245),
-                                  button_name='relationship_events',
-                                  text='RELATIONSHIP EVENTS',
-                                  available=False,
-                                  size=(176, 30),
-                                  )
-
-        y_pos = 0
-        if game.relation_events_list is not None and game.relation_events_list != []:
-            rel_events = '\n'.join(game.relation_events_list)
-            verdana.blit_text(rel_events,
-                              (100, 290 + y_pos),
-                              x_limit=700,
-                              line_break=40)
-
-        else:
-            verdana.text("Nothing significant happened this moon.",
-                         ('center', 290 + y_pos))
-        # buttons
-        draw_menu_buttons()
-
-        if len(game.relation_events_list) > game.max_relation_events_displayed:
-            buttons.draw_button((726, 290),
-                                image=game.up,
-                                arrow="UP",
-                                hotkey=[20])
-            buttons.draw_button((726, 630),
-                                image=game.down,
-                                arrow="DOWN",
-                                hotkey=[22])
+            #Change the type of events displayed
+            elif event.ui_element == self.relationship_events_button:
+                self.event_display_type = "relationship events"
+                self.clan_events_button.enable()
+                self.relationship_events_button.disable()
+                #Update Display
+                self.display_events = self.relation_events
+                self.update_events_display()
+            elif event.ui_element == self.clan_events_button:
+                self.event_display_type = "clan events"
+                self.clan_events_button.disable()
+                self.relationship_events_button.enable()
+                #Update Display
+                self.display_events = self.clan_events
+                self.update_events_display()
+            else:
+                self.menu_button_pressed(event) 
 
     def screen_switches(self):
-        cat_profiles()
+        cat_profiles() #Note - what does this do? 
+        self.timeskip_button = UIImageButton(pygame.Rect((310, 205),(180, 30)), "", object_id = "#timeskip_button")
+        if game.clan.closed_borders == True:
+            self.toggle_borders_button = pygame_gui.elements.UIButton(pygame.Rect((500,210),(200, 30)), "Open Clan orders")
+        else:
+            self.toggle_borders_button = pygame_gui.elements.UIButton(pygame.Rect((500,210),(200, 30)), "Close Clan Borders")
+        
+        #Sets up the buttons to switch between the event types. 
+        self.clan_events_button = UIImageButton(pygame.Rect((224, 245),(176, 30)), "", object_id = "#clan_events_button")
+        self.relationship_events_button = UIImageButton(pygame.Rect((400, 245),(176, 30)), "", object_id = "#relationship_events_button")
+        if self.event_display_type == "clan events":
+            self.clan_events_button.disable() 
+        elif self.event_display_type == "relationship events":
+            self.relationship_events_button.disable() 
 
-class EventsScreen(Screens):
+        self.events_list_box = pygame_gui.elements.UITextBox(self.display_events, pygame.Rect((100,290),(600,400)))
 
-    def handle_event(self, event):
-        #max_scroll_direction = len(game.cur_events_list) - game.max_events_displayed
-        if len(game.cur_events_list) > game.max_events_displayed:
-            max_scroll_direction = len(game.cur_events_list) - game.max_events_displayed
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP and game.event_scroll_ct < 0:
-                    game.cur_events_list.insert(0, game.cur_events_list.pop())
-                    game.event_scroll_ct += 1
-                if event.key == pygame.K_DOWN and abs(
-                        game.event_scroll_ct) < max_scroll_direction:
-                    game.cur_events_list.append(game.cur_events_list.pop(0))
-                    game.event_scroll_ct -= 1
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4 and game.event_scroll_ct < 0:
-                    game.cur_events_list.insert(0, game.cur_events_list.pop())
-                    game.event_scroll_ct += 1
-                if event.button == 5 and abs(
-                        game.event_scroll_ct) < max_scroll_direction:
-                    game.cur_events_list.append(game.cur_events_list.pop(0))
-                    game.event_scroll_ct -= 1
-        return super().handle_event(event)
+        #Display text
+        #self.explain_text = pygame_gui.elements.UITextBox(self.display_text, pygame.Rect((25,110),(750,40)))
+
+        #Draw and disable the correct menu buttons. 
+        self.set_disabled_menu_buttons(["events_screen"])
+        self.show_menu_buttons()
+
+    def exit_screen(self):
+        self.timeskip_button.kill()
+        self.toggle_borders_button.kill()
+        self.clan_events_button.kill()
+        self.relationship_events_button.kill()
+        self.events_list_box.kill()
+        #self.hide_menu_buttons()
 
     def on_use(self):
         draw_clan_name()
@@ -165,82 +137,16 @@ class EventsScreen(Screens):
             verdana.text(f'Clan age: {str(game.clan.age)} moons',
                          ('center', 170))
 
+        #What does this do? 
         if game.switches['events_left'] == 0:
-            buttons.draw_image_button((310, 205),
-                                button_name='timeskip_moon',
-                                text='TIMESKIP ONE MOON',
-                                timeskip=True,
-                                size=(180, 30),
-                                hotkey=[11])
-            if game.switches['timeskip']:
-                game.cur_events_list = []
-                game.relation_events_list = []
+            self.timeskip_button.enable()
         else:
-            buttons.draw_image_button((310, 205),
-                                button_name='timeskip_moon',
-                                text='TIMESKIP ONE MOON',
-                                size=(180, 30),
-                                available=False)
-        if game.clan.closed_borders == False:
-            buttons.draw_button((500,210), button_name='close_borders', text='Close Borders', size = (50, 30), available=True)
-        else:
-            buttons.draw_button((500,210), button_name='open_borders', text='Open Borders', size = (50, 30), available=True)
+            self.timeskip_button.disable()
 
-        events_class.one_moon()
+    def update_events_display(self):
+        self.events_list_box.kill()
+        self.events_list_box = pygame_gui.elements.UITextBox(self.display_events, pygame.Rect((100,290),(600,400)))
 
-        buttons.draw_image_button((224, 245),
-                                  button_name='clan_events',
-                                  text='CLAN EVENTS',
-                                  cur_screen='events screen',
-                                  size=(176, 30),
-                                  available=False
-                                  )
-        # show the Relationship events
-        buttons.draw_image_button((400, 245),
-                                  button_name='relationship_events',
-                                  text='RELATIONSHIP EVENTS',
-                                  cur_screen='relationship event screen',
-                                  size=(176, 30),
-                                  hotkey=[12]
-                                  )
-
-        y_pos = 0
-        if game.cur_events_list is not None and game.cur_events_list != []:
-            for i in range(len(game.cur_events_list)):
-                if not isinstance(game.cur_events_list[i], str):
-                    game.cur_events_list.remove(game.cur_events_list[i])
-                    break
-                    
-            events = '\n'.join(game.cur_events_list)
-            verdana.blit_text(events,
-                              (100, 290 + y_pos),
-                              x_limit=700,
-                              line_break=40)
-
-            #for x in range(min(len(game.cur_events_list), game.max_events_displayed)):
-            #    if "Clan has no " in game.cur_events_list[x]:
-            #        verdana_red.text(game.cur_events_list[x],
-            #                         ('center', 290 + a * 30))
-            #    else:
-            #        verdana.blit_text(game.cur_events_list[x],
-            #                          (100, 290 + a * 30),
-            #                          x_limit=700)
-            #    a += 1
-
-        else:
-            verdana.text("Nothing significant happened this moon.",
-                         ('center', 290 + y_pos))
-
-        draw_menu_buttons()
-        if len(game.cur_events_list) > game.max_events_displayed:
-            buttons.draw_button((726, 290),
-                                image=game.up,
-                                arrow="UP",
-                                hotkey=[20])
-            buttons.draw_button((726, 630),
-                                image=game.down,
-                                arrow="DOWN",
-                                hotkey=[22])
 
 class PatrolEventScreen(Screens):
 

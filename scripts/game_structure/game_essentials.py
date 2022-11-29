@@ -30,6 +30,10 @@ class Game():
     game_mode_list = ['classic', 'expanded', 'cruel season']
     relation_events_list = []
 
+    #Keeping track of various last screen for various purposes
+    last_screen_forupdate = 'start screen'
+    last_screen_forProfile = 'list screen'
+
     down = pygame.image.load("resources/images/buttons/arrow_down.png").convert_alpha()
     up = pygame.image.load("resources/images/buttons/arrow_up.png").convert_alpha()
 
@@ -64,8 +68,6 @@ class Game():
         'event': None,
         'cur_screen': 'start screen',
         'naming_text': '',
-        'suffix_text' : '',
-        'active_text_field' :0,
         'timeskip': False,
         'mate': None,
         'choosing_mate':False,
@@ -181,7 +183,7 @@ class Game():
         self.keyspressed = []
         # carry commands
         self.carry_commands()
-
+    
     def carry_commands(self):
         """ Run this function to go through commands added to the switch-dictionary and carry them, then
         reset them back to normal after the action"""
@@ -194,13 +196,13 @@ class Game():
         if self.switches['save_settings']:
             self.save_settings()
             self.switches['save_settings'] = False
-        if self.switches[
+        '''if self.switches[
                 'save_clan'] and self.clan is not None and self.cat_class is not None:
             self.clan.save_clan()
             self.clan.save_pregnancy(game.clan)
             self.save_cats()
             self.switches['save_clan'] = False
-            self.switches['saved_clan'] = True
+            self.switches['saved_clan'] = True'''
         if self.switches['switch_clan']:
             self.clan.switch_clans()
             self.switches['switch_clan'] = False

@@ -43,7 +43,10 @@ class StartScreen(Screens):
         self.error_label.kill()
 
     def screen_switches(self):
+        #Make those unslightly menu button hide away
+        self.hide_menu_buttons()
         #Create buttons
+
         self.continue_button = UIImageButton(pygame.Rect((70, 310), (192, 35)), "",
                                                             object_id = pygame_gui.core.ObjectID(object_id="#continue_button"))
         self.switch_clan_button = UIImageButton(pygame.Rect((70, 355), (192, 35)), "", 
@@ -349,6 +352,14 @@ class LanguageScreen(Screens):
 
 class StatsScreen(Screens):
 
+    def screen_switches(self):
+        self.set_disabled_menu_buttons(["stats"])
+        self.show_menu_buttons()
+
+    def handle_event(self, event):
+        if event.type == pygame_gui.UI_BUTTON_START_PRESS:
+            self.menu_button_pressed(event)
+
     def on_use(self):
         draw_clan_name()
         living_num = 0
@@ -378,4 +389,3 @@ class StatsScreen(Screens):
         verdana.text('Number of Elders: ' + str(elder_num), (100, 350))
         verdana.text('Number of StarClan Cats: ' + str(starclan_num),
                      (100, 400))
-        draw_menu_buttons()
