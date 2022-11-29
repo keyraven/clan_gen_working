@@ -560,6 +560,7 @@ class AllegiancesScreen(Screens):
     def screen_switches(self):
 
         #Set Menu Buttons. 
+        self.show_menu_buttons()
         self.set_disabled_menu_buttons(["allegiances"])
         self.allegiance_list = []
 

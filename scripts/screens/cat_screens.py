@@ -798,7 +798,7 @@ class ProfileScreen(Screens):
             self.toggle_deputy_button = UIImageButton(pygame.Rect((226,486),(172,36)), "", visible = False)
             self.toggle_med_button = UIImageButton(pygame.Rect((226,522),(172,52)), "", visible = False)
             self.close_tab_button = UIImageButton(pygame.Rect((226, 574),(172,36)), "", visible = False)
-            self.update_disabled_buttons()
+            self.update_disabled_buttons_and_text()
         
     def toggle_personal_tab(self):
         #Save what is previously open, for toggle purposes. 
@@ -821,7 +821,7 @@ class ProfileScreen(Screens):
             #    If you can think of a better way to do this, please fix! 
             self.cis_trans_button = UIImageButton(pygame.Rect((402, 486),(0,0)), "", visible = False)
             self.toggle_kits = UIImageButton(pygame.Rect(((402, 574)),(0,0)), "", visible = False)
-            self.update_disabled_buttons()
+            self.update_disabled_buttons_and_text()
 
     def toggle_dangerous_tab(self):
         #Save what is previously open, for toggle purposes. 
