@@ -90,6 +90,27 @@
             "text_horiz_alignment": "left"
         }
     },
+    "#setting_text_box":
+    {
+        "colours": 
+        {
+            "dark_bg": "#FFFF0000",
+            "normal_text": "#000000"
+        },
+        "font":
+        {
+            "name": "nonosans",
+            "size": "15",
+            "regular_path": "resources/fonts/NotoSans-Regular.ttf"
+        },
+        "misc":
+        {
+            "border_width": "0",
+            "shadow_width": "0",
+            "text_horiz_alignment": "left",
+            "padding": "0,0"
+        }
+    },
     "#cat_profile_info_box":
     {
         "colours": 
@@ -1529,6 +1550,228 @@
             "shadow_width": "0",
             "text_horiz_alignment": "center",
             "padding": "0,0"
+        }
+    },
+    "#checked_checkbox": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/checkmark_on.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/checkmark_on_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/checkmark_on_hover.png"
+            }
+        }
+    },
+    "#unchecked_checkbox": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/checkmark_off.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/checkmark_off_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/checkmark_off_hover.png"
+            }
+        }
+    },
+    "#general_settings_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/general_settings.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/general_settings_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/general_settings_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/general_settings_unavailable.png"
+            }
+        }
+    },
+    "#relation_settings_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/relation_settings.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/relation_settings_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/relation_settings_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/relation_settings_unavailable.png"
+            }
+        }
+    },
+    "#info_settings_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/info.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/info_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/info_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/info_unavailable.png"
+            }
+        }
+    },
+    "#lang_settings_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/language.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/language_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/language_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/language_unavailable.png"
+            }
+        }
+    },
+    "#save_settings_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/save_settings.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/save_settings_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/save_settings_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/save_settings_unavailable.png"
+            }
+        }
+    },
+    "#english_lang_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/english.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/english_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/english_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/english_unavailable.png"
+            }
+        }
+    },
+    "#spanish_lang_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/spanish.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/spanish_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/spanish_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/spanish_unavailable.png"
+            }
+        }
+    },
+    "#german_lang_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/german.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/german_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/german_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/german_unavailable.png"
+            }
         }
     }
 }

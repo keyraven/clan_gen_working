@@ -32,7 +32,8 @@ BUTTONS:
 
 """
 Currently in the process of converting all screens and UI elements to pygame_gui.  -keyraven
-Completed:
+
+DONE:
 NameChangeScreen 
 StartScreen
 GenderChangeScreen
@@ -42,14 +43,13 @@ ListScreen
 OutsideClanScreen
 StarclanScreen
 ProfileScreen
+SettingsScreen
+DFScreen
 
 
 #TODO:
--DFScreen
 -MakeClanScreen
 -PatrolEventScreen
--InfoScreen
--SettingsScreen
 -ChooseMateScreen
 -ChooseMentorScreen
 -RelationshipScreen
@@ -59,6 +59,9 @@ ProfileScreen
 Removed Screens:
 NameChangedScreen
 GenderChangedScreen
+InfoScreen
+RelationshipSettingsScreen
+LanguageScreen
 """
 
 

@@ -305,8 +305,10 @@ class ProfileScreen(Screens):
             elif event.ui_element == self.toggle_deputy_button:
                 if self.the_cat.status == 'warrior':
                     self.the_cat.status_change('deputy')
+                    game.clan.deputy = self.the_cat
                 elif self.the_cat.status == 'deputy':
                     self.the_cat.status_change('warrior')
+                    game.clan.deputy = None
                 self.clear_profile()
                 self.build_profile()
                 self.update_disabled_buttons_and_text()

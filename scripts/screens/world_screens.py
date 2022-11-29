@@ -110,15 +110,15 @@ class OutsideClanScreen(Screens):
             self.list_page = self.all_pages
 
         #Handle which next buttons are clickable. 
-        if self.list_page >= self.all_pages:
+        if self.all_pages <= 1:
+            self.previous_page_button.disable()
+            self.next_page_button.disable()
+        elif self.list_page >= self.all_pages:
             self.previous_page_button.enable()
             self.next_page_button.disable()
         elif self.list_page == 1 and self.all_pages > 1:
             self.previous_page_button.disable()
             self.next_page_button.enable()
-        elif self.all_pages <= 1:
-            self.previous_page_button.disable()
-            self.next_page_button.disable()
         else:
             self.previous_page_button.enable()
             self.next_page_button.enable()
