@@ -32,6 +32,8 @@ BUTTONS:
 
 """
 Currently in the process of converting all screens and UI elements to pygame_gui.  -keyraven
+My main goal is it make things FUNCTIONAL. Some tweaks to visual elements may still be needed when a screen is "done". 
+Some small bits of text may also still be using the old system, and not text-boxes. 
 
 DONE:
 NameChangeScreen 
@@ -56,12 +58,14 @@ DFScreen
 -ViewChildrenScreen
 
 
-Removed Screens:
+REMOVED SCREENS:
 NameChangedScreen
 GenderChangedScreen
 InfoScreen
 RelationshipSettingsScreen
 LanguageScreen
+
+Is SingleEventScreen screen ever used??
 """
 
 

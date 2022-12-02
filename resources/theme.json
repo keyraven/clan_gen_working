@@ -1773,6 +1773,608 @@
                 "path":"resources/images/buttons/german_unavailable.png"
             }
         }
+    },
+    "#classic_mode_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/classic_mode.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/classic_mode_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/classic_mode_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/classic_mode_unavailable.png"
+            }
+        }
+    },
+    "#expanded_mode_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/expanded_mode.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/expanded_mode_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/expanded_mode_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/expanded_mode_unavailable.png"
+            }
+        }
+    },
+    "#cruel_mode_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/cruel_season.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/cruel_season_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/cruel_season_hover.png"
+            }
+        }
+    },
+    "#previous_step_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/last_step.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/last_step_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/last_step_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/last_step_unavailable.png"
+            }
+        }
+    },
+    "#next_step_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/next_step.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/next_step_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/next_step_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/next_step_unavailable.png"
+            }
+        }
+    },
+    "#random_dice_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/random_dice.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/random_dice_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/random_dice_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/random_dice_unavailable.png"
+            }
+        }
+    },
+    "#reset_name_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/reset_name.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/reset_name_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/reset_name_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/reset_name_unavailable.png"
+            }
+        }
+    },
+    "#nine_lives_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/grant_lives.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/grant_lives_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/grant_lives_hover.png"
+            }
+        }
+    },
+    "#support_leader_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/support_leader.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/support_leader_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/support_leader_hover.png"
+            }
+        }
+    },
+    "#aid_clan_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/aid_clan.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/aid_clan_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/aid_clan_hover.png"
+            }
+        }
+    },
+    "#recruit_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/recruit.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/recruit_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/recruit_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/recruit_unavailable.png"
+            }
+        }
+    },
+    "#done_arrow_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/done_creation.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/done_creation_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/done_creation_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/done_creation_unavailable.png"
+            }
+        }
+    },
+    "#forest_biome_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/forest.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/forest_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/forest_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/forest_unavailable.png"
+            }
+        }
+    },
+    "#mountain_biome_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/mountain.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/mountain_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/mountain_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/mountain_unavailable.png"
+            }
+        }
+    },
+    "#plains_biome_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/plains.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/plains_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/plains_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/plains_unavailable.png"
+            }
+        }
+    },
+    "#classic_tab": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/classic_camp.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/classic_camp_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/classic_camp_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/classic_camp_unavailable.png"
+            }
+        }
+    },
+    "#gully_tab": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/gully_camp.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/gully_camp_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/gully_camp_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/gully_camp_unavailable.png"
+            }
+        }
+    },
+    "#beach_biome_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/beach.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/beach_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/beach_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/beach_unavailable.png"
+            }
+        }
+    },
+    "#random_background_button": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/random_bg.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/random_bg_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/random_bg_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/random_bg_unavailable.png"
+            }
+        }
+    },
+    "#cliff_tab": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/cliff_camp.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/cliff_camp_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/cliff_camp_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/cliff_camp_unavailable.png"
+            }
+        }
+    },
+    "#cave_tab": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/cave_camp.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/cave_camp_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/cave_camp_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/cave_camp_unavailable.png"
+            }
+        }
+    },
+    "#grasslands_tab": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/grasslands_camp.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/grasslands_camp_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/grasslands_camp_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/grasslands_camp_unavailable.png"
+            }
+        }
+    },
+    "#tunnel_tab": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/tunnel_camp.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/tunnel_camp_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/tunnel_camp_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/tunnel_camp_unavailable.png"
+            }
+        }
+    },
+    "#tidepool_tab": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/tidepool_camp.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/tidepool_camp_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/tidepool_camp_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/tidepool_camp_unavailable.png"
+            }
+        }
+    },
+    "#tidal_cave_tab": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/tidal_cave_camp.png"
+            },
+            "hovered_image":
+            {
+                "path": "resources/images/buttons/tidal_cave_camp_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/tidal_cave_camp_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/tidal_cave_camp_unavailable.png"
+            }
+        }
+    },
+    "#continue_button_small": 
+    {
+        "prototype": "#image_button",
+		"images":
+        {
+            "normal_image":
+            {
+                "path": "resources/images/buttons/continue_small.png"
+            },
+			"hovered_image":
+            {
+                "path": "resources/images/buttons/continue_small_hover.png"
+            },
+			"selected_image":
+            {
+                "path": "resources/images/buttons/continue_small_hover.png"
+            },
+            "disabled_image":
+            {
+                "path":"resources/images/buttons/continue_small_unavailable.png"
+            }
+        }
+    },
+    "#clan_header_text_box": 
+    {
+        "colours": 
+        {
+            "dark_bg": "#00000000",
+            "normal_text": "#FFFFFF"
+        },
+        "font":
+        {
+            "name": "nonosans",
+            "size": "15",
+            "regular_path": "resources/fonts/NotoSans-Regular.ttf"
+        },
+        "misc":
+        {
+            "border_width": "0",
+            "shadow_width": "0",
+            "text_horiz_alignment": "center"
+        }
     }
 }
 

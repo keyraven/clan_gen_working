@@ -64,15 +64,18 @@ class UIImageButton(pygame_gui.elements.UIButton):
 class UISpriteButton():
     '''This is for use with the cat sprites. It wraps together a UIImage and Transparent Button.
         For most functions, this can be used exactly like other pygame_gui elements. '''
-    def __init__(self, relative_rect, sprite, cat_id = None, visible = 1 ):
+    def __init__(self, relative_rect, sprite, cat_id = None, visible = 1 , cat_object = None):
 
         #We have to scale the image before putting it into the image object. Otherwise, the method of upscaling that UIImage uses will make the pixel art fuzzy
         self.image = pygame_gui.elements.UIImage(relative_rect, pygame.transform.scale(sprite, relative_rect.size),visible = visible)
         #The transparent button. This a subclass that UIButton that aslo hold the cat_id. 
-        self.button = CatButton(relative_rect, visible = visible, cat_id= cat_id)
+        self.button = CatButton(relative_rect, visible = visible, cat_id= cat_id, cat_object=cat_object)
 
     def return_cat_id(self):
         return self.button.return_cat_id()
+
+    def return_cat_object(self):
+        return self.button.return_cat_object()
 
     def enable(self):
         self.button.enable()
@@ -82,7 +85,7 @@ class UISpriteButton():
 
     def hide(self):
         self.image.hide()
-        self.image.hide()
+        self.button.hide()
 
     def show(self):
         self.image.show()
@@ -109,12 +112,19 @@ class UISpriteButton():
 
 class CatButton(pygame_gui.elements.UIButton):
     '''Basic UIButton subclass for at sprite buttons. It stores the cat ID. '''
-    def __init__(self, relative_rect, cat_id = None, visible = True):
+    def __init__(self, relative_rect, cat_id = None, visible = True, cat_object = None):
         self.cat_id = cat_id
+        self.cat_object = cat_object
         super().__init__(relative_rect, "", object_id="#image_button", visible = visible)
 
     def return_cat_id(self):
         return self.cat_id
+    
+    def return_cat_object(self):
+        return self.cat_object
+
+    def set_id(self,id):
+        self.cat_id = id
 
 class UITextBoxTweaked(pygame_gui.elements.UITextBox):
     '''The default class has 1.25 line spacing. It would be fairly easy to allow the user to change that, but it doesn't allow it... for some reason
@@ -191,3 +201,45 @@ class UITextBoxTweaked(pygame_gui.elements.UITextBox):
 
         self._align_all_text_rows()
         self.text_box_layout.finalise_to_new()
+
+class UIImageTextBox():
+    '''Wraps together an image and an text box. Creates text boxes with an image background'''
+    def __init__(self,
+                 html_text: str,
+                 image,
+                 relative_rect,
+                 manager = None,
+                 line_spacing = 1.25,
+                 wrap_to_height: bool = False,
+                 layer_starting_height: int = 1,
+                 container = None,
+                 object_id = None,
+                 anchors = None,
+                 visible: int = 1,
+                 *,
+                 pre_parsing_enabled: bool = True,
+                 text_kwargs = None,
+                 allow_split_dashes: bool = True) -> None:
+        self.image = pygame_gui.elements.UIImage(relative_rect, image, layer_starting_height=layer_starting_height,
+                                            container=container, anchors=anchors, visible=visible)
+        self.text_box = UITextBoxTweaked(html_text, relative_rect, object_id=object_id, layer_starting_height=layer_starting_height,
+                                            container=container, anchors=anchors, visible=visible, text_kwargs=text_kwargs, 
+                                            allow_split_dashes=allow_split_dashes, wrap_to_height=wrap_to_height, line_spacing=line_spacing,
+                                            manager=manager, pre_parsing_enabled=pre_parsing_enabled)
+
+    def hide(self):
+        self.image.hide()
+        self.text_box.hide()
+
+    def show(self):
+        self.image.show()
+        self.text_box.show()
+
+    def kill(self):
+        self.text_box.kill()
+        self.image.kill()
+        del self
+
+    def set_image(self, new_image):
+        self.image.set_image(new_image)
+    

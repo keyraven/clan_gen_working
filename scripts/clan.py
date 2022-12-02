@@ -79,7 +79,8 @@ class Clan():
                  world_seed=6616,
                  camp_site=(20, 22),
                  camp_bg=None,
-                 game_mode='classic'):
+                 game_mode='classic',
+                 starting_members = []):
         if name != "":
             self.name = name
             self.leader = leader
@@ -108,6 +109,7 @@ class Clan():
             self.game_mode = game_mode
             self.pregnancy_data = {}
             self.closed_borders = False
+            self.starting_members = starting_members
 
     def create_clan(self):
         """ This function is only called once a new clan is created in the 'clan created' screen, not every time
@@ -123,13 +125,13 @@ class Clan():
         for i in key_copy:  # Going through all currently existing cats
             # cat_class is a Cat-object
             not_found = True
-            for x in game.switches['members']:
-                if Cat.all_cats[i] == game.choose_cats[x]:
+            for x in self.starting_members:
+                if Cat.all_cats[i] == x:
                     self.add_cat(Cat.all_cats[i])
                     not_found = False
-            if Cat.all_cats[i] != game.choose_cats[game.switches['leader']] and Cat.all_cats[i] != \
-                    game.choose_cats[game.switches['medicine_cat']] and Cat.all_cats[i] != \
-                    game.choose_cats[game.switches['deputy']] and Cat.all_cats[i] != \
+            if Cat.all_cats[i] != self.leader and Cat.all_cats[i] != \
+                    self.medicine_cat and Cat.all_cats[i] != \
+                    self.deputy and Cat.all_cats[i] != \
                     self.instructor \
                     and not_found:
                 Cat.all_cats[i].example = True
